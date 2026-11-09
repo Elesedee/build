@@ -1,0 +1,14 @@
+name: build
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          xcrun -sdk iphoneos clang payload.c -o payload \
+            -arch arm64 -static -miphoneos-version-min=15.0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: payload
+          path: payload
